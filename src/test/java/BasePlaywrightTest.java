@@ -16,7 +16,7 @@ public class BasePlaywrightTest {
     private Browser browser;
     protected Page page;
     private BrowserContext context;
-    private Boolean isTraceEnabled = false;
+    private final Boolean isTraceEnabled = false;
 
     /**
      * Инициализация браузера и его настроек перед запуском всех тестов в классе
@@ -24,10 +24,9 @@ public class BasePlaywrightTest {
     @BeforeClass
     public void setUp() {
         //инициализация браузера с настройками
-        browser = Playwright
-                .create()
-                .chromium()
-                .launch(new BrowserType.LaunchOptions().setHeadless(false).setChannel("chrome"));
+        browser = Playwright.create()
+                .firefox()
+                .launch(new BrowserType.LaunchOptions().setHeadless(false));
 
         //создаем контекст для браузера
         context = browser.newContext();
@@ -58,7 +57,6 @@ public class BasePlaywrightTest {
      * Добавляет вложения к упавшему тесту. Скриншот, исходный код страницы, трейсинг
      *
      * @param result данные о тесте
-     * @throws IOException
      */
     @AfterMethod
     public void attachFilesToFailedTest(ITestResult result) throws IOException {
